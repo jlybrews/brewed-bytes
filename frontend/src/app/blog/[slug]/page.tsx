@@ -5,9 +5,10 @@ import { client } from "@/lib/sanity/client";
 import { postBySlugQuery } from "@/lib/sanity/queries";
 import { urlFor } from "@/lib/sanity/client";
 import { PortableText } from "@portabletext/react";
+import { Post } from "@/types/sanity";
 
 async function getPost(slug: string) {
-  return client.fetch(postBySlugQuery, { slug });
+  return client.fetch<Post>(postBySlugQuery, { slug });
 }
 
 export default async function BlogPost({
@@ -83,7 +84,7 @@ export default async function BlogPost({
 
         {/* Categories */}
         <div className="mt-12 flex flex-wrap gap-2">
-          {post.categories && post.categories.map((category: string) => (
+          {post.categories && post.categories.map((category) => (
             <Link
               key={category}
               href={`/category/${category.toLowerCase()}`}

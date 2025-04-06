@@ -4,9 +4,10 @@ import { BeakerIcon, BookOpenIcon, NewspaperIcon, EnvelopeIcon } from "@heroicon
 import { client } from "@/lib/sanity/client";
 import { featuredPostsQuery } from "@/lib/sanity/queries";
 import { urlFor } from "@/lib/sanity/client";
+import { Post } from "@/types/sanity";
 
 async function getFeaturedPosts() {
-  return client.fetch(featuredPostsQuery);
+  return client.fetch<Post[]>(featuredPostsQuery);
 }
 
 export default async function Home() {
@@ -67,7 +68,7 @@ export default async function Home() {
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post: any) => (
+          {posts.map((post) => (
             <article key={post._id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
               <Link href={`/blog/${post.slug.current}`}>
                 <div className="relative h-48">
@@ -80,7 +81,7 @@ export default async function Home() {
                 </div>
                 <div className="p-6">
                   <div className="flex flex-wrap gap-2 mb-3">
-                    {post.categories && post.categories.slice(0, 2).map((category: string) => (
+                    {post.categories && post.categories.slice(0, 2).map((category) => (
                       <span
                         key={category}
                         className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-medium"
@@ -134,7 +135,7 @@ export default async function Home() {
       <section className="py-16 px-4 bg-gray-900 text-white">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4 text-white">Stay Updated</h2>
-          <p className="text-gray-200 mb-8">
+          <p className="text-gray-200 mb-6">
             Subscribe to our newsletter for the latest coffee tips, brewing techniques, and industry news.
           </p>
           <form className="flex flex-col items-center">
