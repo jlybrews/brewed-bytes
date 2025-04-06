@@ -11,11 +11,14 @@ async function getPost(slug: string) {
   return client.fetch<Post>(postBySlugQuery, { slug });
 }
 
-export default async function BlogPost({
-  params,
-}: {
-  params: { slug: string };
-}) {
+type Props = {
+  params: {
+    slug: string;
+  };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export default async function BlogPost({ params }: Props) {
   // Ensure params.slug is a string
   const slug = params.slug;
   if (!slug || typeof slug !== 'string') {
@@ -98,7 +101,7 @@ export default async function BlogPost({
         {/* Back to Blog */}
         <div className="mt-16 text-center">
           <Link
-            href="/blog"
+            href="/"
             className="inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-full hover:bg-gray-800 transition-colors"
           >
             <svg
@@ -115,7 +118,7 @@ export default async function BlogPost({
                 d="M10 19l-7-7m0 0l7-7m-7 7h18"
               />
             </svg>
-            Back to Blog
+            Back to Home
           </Link>
         </div>
       </div>
