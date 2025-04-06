@@ -11,16 +11,17 @@ async function getPost(slug: string) {
   return client.fetch<Post>(postBySlugQuery, { slug });
 }
 
-type Props = {
-  params: {
+type Props = Promise<{
+//   params: {
     slug: string;
-  };
+//   };
   searchParams: { [key: string]: string | string[] | undefined };
-};
+}>;
 
-export default async function BlogPost({ params }: Props) {
+export default async function BlogPost({ params }:{ params: Props }) {
   // Ensure params.slug is a string
-  const slug = params.slug;
+  const { slug } = await params
+//   const slug = params.slug;
   if (!slug || typeof slug !== 'string') {
     notFound();
   }
